@@ -1,7 +1,7 @@
 
 </TabItem>
 
-### How to send swap message to DEX (DeDust)?
+### How to send a swap message to DEX (DeDust)?
 
 <TabItem value="js-tonweb" label="JS (@tonweb)">
 In this tutorial, we use tonweb, one of the JS SDKs of TON to send swap messages to DeDust.All theory and
