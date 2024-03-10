@@ -36,7 +36,7 @@ const factory = tonClient.open(Factory.createFromAddress(MAINNET_FACTORY_ADDR));
 ```
 here we add : 
 
-```typescripy
+```typescript
 
 const TonWeb = require("tonweb");
 const {mnemonicToKeyPair} = require("tonweb-mnemonic");
