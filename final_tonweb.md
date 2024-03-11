@@ -49,6 +49,13 @@ async function main() {
     );
     const collectionAddress  = new TonWeb.Address('put your collection address');
     const newOwnerAddress = new TonWeb.Address('put new owner wallet address');
+-- Like it ( from another tutorilar (this link )
+import TonWeb from "tonweb";
+const tonweb = new TonWeb();
+const jettonMinter = new TonWeb.token.jetton.JettonMinter(tonweb.provider, {address: "<JETTON_MASTER_ADDRESS>"});
+const data = await jettonMinter.getJettonData();
+console.log('Total supply:', data.totalSupply.toString());
+console.log('URI to off-chain metadata:', data.jettonContentUri);
 
     const messageBody  = new TonWeb.boc.Cell();
     messageBody.bits.writeUint(3, 32); // opcode for changing owner
