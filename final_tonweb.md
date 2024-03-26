@@ -31,7 +31,8 @@ const tonweb = new TonWeb(
     apiKey: "YOUR_MAINNET_TONCENTER_API_KEY",
   }),
 );
-const factory = tonClient.open(Factory.createFromAddress(MAINNET_FACTORY_ADDR));
+below line is from ton.js so we should change it accordingly to reflect tonweb.
+//const factory = tonClient.open(Factory.createFromAddress(MAINNET_FACTORY_ADDR));
 //The Factory contract serves used to  locate other contracts.
 ```
 here we add : 
