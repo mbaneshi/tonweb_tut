@@ -11,7 +11,22 @@ After initializing the node project, we need to bring some libraries.
 ```bash
 npm install --save tonweb @dedust/sdk tonweb-mnemonic
 ```
+dedust have some address, we need work with our wallet.If we have mnemomic words on hand we can put them in environment variable and use them. like :
 
+```typescript
+
+if (!process.env.MNEMONIC) {
+    throw new Error("Environment variable MNEMONIC is required.");
+  }
+
+  const mnemonic = process.env.MNEMONIC.split(" ");
+```
+or use it direct in our code, like : 
+
+```typescript
+
+const keyPair = await mnemonicToKeyPair("put your mnemonic".split(" "));
+```
 
 Now it is time to bring the necessary objects to scope.
 ```typescript
