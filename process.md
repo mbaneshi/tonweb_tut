@@ -9,12 +9,14 @@ In this tutorial, we use tonweb, one of the JS SDKs of TON to send swap messages
 After initializing the node project, we need to bring some libraries.
 
 ```bash
-npm install --save tonweb @dedust/sdk
+npm install --save tonweb @dedust/sdk tonweb-mnemonic
 ```
+
 
 Now it is time to bring the necessary objects to scope.
 ```typescript
 const TonWeb = require("tonweb");
+const {mnemonicToKeyPair} = require("tonweb-mnemonic");
 
 import { Factory, MAINNET_FACTORY_ADDR } from "@dedust/sdk";
 
@@ -29,8 +31,21 @@ const tonweb = new TonWeb(
     apiKey: "YOUR_MAINNET_TONCENTER_API_KEY",
   }),
 );
-After that we need use some address and our wallet :
 
 ```
 
+After that we need use some address and our wallet :
+
+```typescript
+
+//The Factory contract serves used to  locate other contracts.
+const address1 = new TonWeb.utils.Address('EQDKbjIcfM6ezt8KjKJJLshZJJSqX7XOA4ff-W72r5gqPrHF');
+  // available wallet types: simpleR1, simpleR2, simpleR3,
+    // v2R1, v2R2, v3R1, v3R2, v4R1, v4R2
+    const wallet = new tonweb.wallet.all['v4R2'](tonweb.provider, {
+        publicKey: keyPair.publicKey,
+        wc: 0 // workchain
+    });
+
+```
 
