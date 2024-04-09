@@ -31,11 +31,25 @@ const tonweb = new TonWeb(
     apiKey: "YOUR_MAINNET_TONCENTER_API_KEY",
   }),
 );
-below line is from ton.js so we should change it accordingly to reflect tonweb.
-//const factory = tonClient.open(Factory.createFromAddress(MAINNET_FACTORY_ADDR));
+After that we need use some address and our wallet :
+```typescript
+
 //The Factory contract serves used to  locate other contracts.
+const address1 = new TonWeb.utils.Address('EQDKbjIcfM6ezt8KjKJJLshZJJSqX7XOA4ff-W72r5gqPrHF');
+  // available wallet types: simpleR1, simpleR2, simpleR3,
+    // v2R1, v2R2, v3R1, v3R2, v4R1, v4R2
+    const wallet = new tonweb.wallet.all['v4R2'](tonweb.provider, {
+        publicKey: keyPair.publicKey,
+        wc: 0 // workchain
+    });
+
+```
+
+
 ```
 here we add : 
+
+
 
 ```typescript
 
