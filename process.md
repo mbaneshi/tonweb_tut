@@ -17,6 +17,8 @@ Now it is time to bring the necessary objects to scope.
 ```typescript
 const TonWeb = require("tonweb");
 const {mnemonicToKeyPair} = require("tonweb-mnemonic");
+import tonMnemonic from "tonweb-mnemonic";
+
 
   const mnemonic = await tonMnemonic.generateMnemonic();
     // -> ["vintage", "nice", "initial", ... ]  24 words by default
