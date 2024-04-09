@@ -18,6 +18,13 @@ Now it is time to bring the necessary objects to scope.
 const TonWeb = require("tonweb");
 const {mnemonicToKeyPair} = require("tonweb-mnemonic");
 
+  const mnemonic = await tonMnemonic.generateMnemonic();
+    // -> ["vintage", "nice", "initial", ... ]  24 words by default
+
+ const keyPair = await tonMnemonic.mnemonicToKeyPair(mnemonic);
+    // -> {publicKey: Uint8Array(32), secretKey: Uint8Array(64)}
+
+
 import { Factory, MAINNET_FACTORY_ADDR } from "@dedust/sdk";
 
 /* By default, mainnet toncenter.com API is used. Please note that without the API key there will be a request rate limit.
