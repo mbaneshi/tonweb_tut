@@ -10,15 +10,20 @@ In this tutorial, we use tonweb, one of the JS SDKs of TON to send swap messages
 After initializing the node project, we need to bring some libraries.
 
 ```bash
-npm install --save tonweb @dedust/sdk
+npm install --save tonweb @dedust/sdk tonweb-mnemonic
+
 ```
 
 Now it is time to bring the necessary objects to scope.
 
+from tonweb, we need main class to interact with TON blockchain, from dedust SDK, we need bring factory address, so we can find and access to
+other entity.
+So : 
 ```typescript
 const TonWeb = require("tonweb");
 
 import { Factory, MAINNET_FACTORY_ADDR } from "@dedust/sdk";
+
 
 /* By default, mainnet toncenter.com API is used. Please note that without the API key there will be a request rate limit.
 
@@ -31,11 +36,20 @@ const tonweb = new TonWeb(
     apiKey: "YOUR_MAINNET_TONCENTER_API_KEY",
   }),
 );
-After that we need use some address and our wallet :
+```
+
+After that, we need to use some addresses and our wallet :
 ```typescript
 
 //The Factory contract serves used to  locate other contracts.
-const address1 = new TonWeb.utils.Address('EQDKbjIcfM6ezt8KjKJJLshZJJSqX7XOA4ff-W72r5gqPrHF');
+
+// const address1 = new TonWeb.utils.Address('EQDKbjIcfM6ezt8KjKJJLshZJJSqX7XOA4ff-W72r5gqPrHF');
+
+
+
+Our wallet is needed to send message to DEX,to use our wallet we need to access to its address that can be obtain from our public key, and
+also we need access to our secret key hence we need sign our message.
+ 
   // available wallet types: simpleR1, simpleR2, simpleR3,
     // v2R1, v2R2, v3R1, v3R2, v4R1, v4R2
     const wallet = new tonweb.wallet.all['v4R2'](tonweb.provider, {
