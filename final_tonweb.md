@@ -30,7 +30,7 @@ import { Factory, MAINNET_FACTORY_ADDR } from "@dedust/sdk";
 
 You can start your own TON HTTP API instance as it is open source.
 
-Use mainnet TonCenter API with high ratelimit API key 
+Use main net TonCenter API with high rate-limit API key 
 */
 const tonweb = new TonWeb(
   new TonWeb.HttpProvider("https://toncenter.com/api/v2/jsonRPC", {
@@ -42,14 +42,19 @@ const tonweb = new TonWeb(
 After that, we need to use some addresses and our wallet :
 ```typescript
 
-//The Factory contract serves used to  locate other contracts.
+//The Factory contract is used to  locate other contracts.
+const factory_address = TonWeb.Address(Factory.createFromAddress(MAINNET_FACTORY_ADDR));
+or 
+ const factory_address = new TonWeb.utils.Address(Factory.createFromAddress(MAINNET_FACTORY_ADDR));
+both are correct.
+***
 
-// const address1 = new TonWeb.utils.Address('EQDKbjIcfM6ezt8KjKJJLshZJJSqX7XOA4ff-W72r5gqPrHF');
+Our wallet is needed to send messages to DEX, to use our wallet we need access to its address which can be obtained from our public key, and
+also, we need access to our secret key hence we need to sign our message.
+So we can use mnemonic words if we already have a wallet or create it from scratch and use those.
+We address both scenarios, and suppose in either case we sharged our wallet by some coin, because without coin we can not send any message.
 
 
-
-Our wallet is needed to send message to DEX,to use our wallet we need to access to its address that can be obtain from our public key, and
-also we need access to our secret key hence we need sign our message.
  
   // available wallet types: simpleR1, simpleR2, simpleR3,
     // v2R1, v2R2, v3R1, v3R2, v4R1, v4R2
