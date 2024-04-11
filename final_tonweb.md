@@ -65,13 +65,30 @@ const {mnemonicToKeyPair} = require("tonweb-mnemonic");
   }
 
   const mnemonic = process.env.MNEMONIC.split(" ");
+// we suppose we add our words in env variable (best practices)
+```
+or 
+```typescript
+
+const TonWeb = require("tonweb");
+const {mnemonicToKeyPair} = require("tonweb-mnemonic");
+import tonMnemonic from "tonweb-mnemonic";
+
+
+  const mnemonic = await tonMnemonic.generateMnemonic();
+    // -> ["vintage", "nice", "initial", ... ]  24 words by default
 
 
 ```
-by accessing to mnemonic we can continue by : 
+
+
+by accessing to mnemonic (till now we have it on hand ) we can continue by : 
 
 
 ```typescript
+
+ const keyPair = await tonMnemonic.mnemonicToKeyPair(mnemonic);
+    // -> {publicKey: Uint8Array(32), secretKey: Uint8Array(64)}
 const { mnemonicToKeyPair } = require("tonweb-mnemonic");
   const keyPair = await mnemonicToPrivateKey(mnemonic);
 
