@@ -44,18 +44,42 @@ After that, we need to use some addresses and our wallet :
 
 //The Factory contract is used to  locate other contracts.
 const factory_address = TonWeb.Address(Factory.createFromAddress(MAINNET_FACTORY_ADDR));
-or 
+// or 
  const factory_address = new TonWeb.utils.Address(Factory.createFromAddress(MAINNET_FACTORY_ADDR));
-both are correct.
-***
+// both are correct.
+```
 
 Our wallet is needed to send messages to DEX, to use our wallet we need access to its address which can be obtained from our public key, and
 also, we need access to our secret key hence we need to sign our message.
 So we can use mnemonic words if we already have a wallet or create it from scratch and use those.
-We address both scenarios, and suppose in either case we sharged our wallet by some coin, because without coin we can not send any message.
+We address both scenarios, and suppose in either case we charge our wallet with some coin because without a coin we can not send any message.
+
+```typescript
+
+const TonWeb = require("tonweb");
+const {mnemonicToKeyPair} = require("tonweb-mnemonic");
+//Scenario 1, we have 24 words ( mnemonic words)
+
+ if (!process.env.MNEMONIC) {
+    throw new Error("Environment variable MNEMONIC is required.");
+  }
+
+  const mnemonic = process.env.MNEMONIC.split(" ");
 
 
- 
+```
+by accessing to mnemonic we can continue by : 
+
+
+```typescript
+const { mnemonicToKeyPair } = require("tonweb-mnemonic");
+  const keyPair = await mnemonicToPrivateKey(mnemonic);
+
+```
+Now that we have access to our key pairs, we can access to our wallet by  :
+
+ ```typescript
+
   // available wallet types: simpleR1, simpleR2, simpleR3,
     // v2R1, v2R2, v3R1, v3R2, v4R1, v4R2
     const wallet = new tonweb.wallet.all['v4R2'](tonweb.provider, {
@@ -69,78 +93,9 @@ here we add :
 
 
 
-```typescript
 
-const TonWeb = require("tonweb");
-const {mnemonicToKeyPair} = require("tonweb-mnemonic");
-
-async function main() {
-    const tonweb = new TonWeb(new TonWeb.HttpProvider(
-        'https://toncenter.com/api/v2/jsonRPC', {
-            apiKey: 'put your api key'
-        })
-    );
-    const collectionAddress  = new TonWeb.Address('put your collection address');
-    const newOwnerAddress = new TonWeb.Address('put new owner wallet address');
--- Like it ( from another tutorilar (this link )
-import TonWeb from "tonweb";
-const tonweb = new TonWeb();
-const jettonMinter = new TonWeb.token.jetton.JettonMinter(tonweb.provider, {address: "<JETTON_MASTER_ADDRESS>"});
-const data = await jettonMinter.getJettonData();
-console.log('Total supply:', data.totalSupply.toString());
-console.log('URI to off-chain metadata:', data.jettonContentUri);
-
-    const messageBody  = new TonWeb.boc.Cell();
-    messageBody.bits.writeUint(3, 32); // opcode for changing owner
-    messageBody.bits.writeUint(0, 64); // query id
-    messageBody.bits.writeAddress(newOwnerAddress);
-
-    // available wallet types: simpleR1, simpleR2, simpleR3,
-    // v2R1, v2R2, v3R1, v3R2, v4R1, v4R2
-    const keyPair = await mnemonicToKeyPair('put your mnemonic'.split(' '));
-    const wallet = new tonweb.wallet.all['v4R2'](tonweb.provider, {
-        publicKey: keyPair.publicKey,
-        wc: 0 // workchain
-    });
-
-    await wallet.methods.transfer({
-        secretKey: keyPair.secretKey,
-        toAddress: collectionAddress,
-        amount: tonweb.utils.toNano('0.05'),
-        seqno: await wallet.methods.seqno().call(),
-        payload: messageBody,
-        sendMode: 3
-    }).send(); // create transfer and send it
-}
-
-main().finally(() => console.log("Exiting..."));
-```
 
 ```typescript
-import { Address, TonClient4, WalletContractV3R2 } from "@ton/ton";
-import { mnemonicToPrivateKey } from "@ton/crypto";
-import { Asset, Factory, MAINNET_FACTORY_ADDR } from "@dedust/sdk";
-
-async function main() {
-  if (!process.env.MNEMONIC) {
-    throw new Error("Environment variable MNEMONIC is required.");
-  }
-
-  const mnemonic = process.env.MNEMONIC.split(" ");
-
-  if (!process.env.JETTON_ADDRESS) {
-    throw new Error("Environment variable JETTON_ADDRESS is required.");
-  }
-
-  const jettonAddress = Address.parse(process.env.JETTON_ADDRESS);
-
-  const tonClient = new TonClient4({
-    endpoint: "https://mainnet-v4.tonhubapi.com",
-  });
-
-  const factory = tonClient.open(
-    Factory.createFromAddress(MAINNET_FACTORY_ADDR),
-  );
 
   const keys = await mnemonicToPrivateKey(mnemonic);
   const wallet = tonClient.open(
@@ -162,7 +117,7 @@ main();
 ```
 
 ```typescript
-// FIXME: we bring some tutorial from cookbook here .
+// FIXME: we bring some tutorials from the cookbook here .
 //    How to construct a message for a jetton transfer with a comment?
 const TonWeb = require("tonweb");
 const { mnemonicToKeyPair } = require("tonweb-mnemonic");
