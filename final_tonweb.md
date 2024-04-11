@@ -19,6 +19,7 @@ Now it is time to bring the necessary objects to scope.
 from tonweb, we need main class to interact with TON blockchain, from dedust SDK, we need bring factory address, so we can find and access to
 other entity.
 So : 
+
 ```typescript
 const TonWeb = require("tonweb");
 
@@ -59,8 +60,6 @@ also we need access to our secret key hence we need sign our message.
 
 ```
 
-
-```
 here we add : 
 
 
@@ -111,6 +110,7 @@ console.log('URI to off-chain metadata:', data.jettonContentUri);
 
 main().finally(() => console.log("Exiting..."));
 ```
+
 ```typescript
 import { Address, TonClient4, WalletContractV3R2 } from "@ton/ton";
 import { mnemonicToPrivateKey } from "@ton/crypto";
