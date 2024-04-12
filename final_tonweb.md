@@ -43,7 +43,7 @@ After that, we need to use some addresses and our wallet :
 ```typescript
 
 //The Factory contract is used to  locate other contracts.
-const factory_address = TonWeb.Address(Factory.createFromAddress(MAINNET_FACTORY_ADDR));
+const factory_address = new TonWeb.Address(Factory.createFromAddress(MAINNET_FACTORY_ADDR));
 // or 
  const factory_address = new TonWeb.utils.Address(Factory.createFromAddress(MAINNET_FACTORY_ADDR));
 // both are correct.
@@ -67,7 +67,8 @@ const {mnemonicToKeyPair} = require("tonweb-mnemonic");
   const mnemonic = process.env.MNEMONIC.split(" ");
 // we suppose we add our words in env variable (best practices)
 ```
-or 
+or if we have not 24 words, and we want to create it :
+
 ```typescript
 
 const TonWeb = require("tonweb");
@@ -89,11 +90,9 @@ by accessing to mnemonic (till now we have it on hand ) we can continue by :
 
  const keyPair = await tonMnemonic.mnemonicToKeyPair(mnemonic);
     // -> {publicKey: Uint8Array(32), secretKey: Uint8Array(64)}
-const { mnemonicToKeyPair } = require("tonweb-mnemonic");
-  const keyPair = await mnemonicToPrivateKey(mnemonic);
 
 ```
-Now that we have access to our key pairs, we can access to our wallet by  :
+Now that we have access to our key pairs, we can access our wallet by  :
 
  ```typescript
 
@@ -104,33 +103,6 @@ Now that we have access to our key pairs, we can access to our wallet by  :
         wc: 0 // workchain
     });
 
-```
-
-here we add : 
-
-
-
-
-
-```typescript
-
-  const keys = await mnemonicToPrivateKey(mnemonic);
-  const wallet = tonClient.open(
-    WalletContractV3R2.create({
-      workchain: 0,
-      publicKey: keys.publicKey,
-    }),
-  );
-
-  const sender = wallet.sender(keys.secretKey);
-
-  await factory.sendCreateVault(sender, {
-    asset: Asset.jetton(jettonAddress),
-  });
-}
-
-main();
-// HACK: this is dedust refrence
 ```
 
 ```typescript
