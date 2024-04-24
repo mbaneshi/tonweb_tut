@@ -105,6 +105,28 @@ Now that we have access to our key pairs, we can access our wallet by  :
     });
 
 ```
+From here, we can use some method associated with our wallet object like transfer to send a message to corresponding vault.
+to achieve this, we need to prepare our message payload. according to the dedust schema that was brought in the preface of this tutorial section we have two schema,
+one for jetton to jetton and another tonconin to jetton.
+scheme of toncoin to jetton swap:
+```tbl
+swap#ea06185d query_id:uint64 amount:Coins _:SwapStep swap_params:^SwapParams = InMsgBody;
+              step#_ pool_addr:MsgAddressInt params:SwapStepParams = SwapStep;
+              step_params#_ kind:SwapKind limit:Coins next:(Maybe ^SwapStep) = SwapStepParams;
+              swap_params#_ deadline:Timestamp recipient_addr:MsgAddressInt referral_addr:MsgAddress
+                    fulfill_payload:(Maybe ^Cell) reject_payload:(Maybe ^Cell) = SwapParams;
+
+```
+and swapping jetton to jetton or jetton to toncoin :
+```tlb
+swap#e3a0d482 _:SwapStep swap_params:^SwapParams = ForwardPayload;
+              step#_ pool_addr:MsgAddressInt params:SwapStepParams = SwapStep;
+              step_params#_ kind:SwapKind limit:Coins next:(Maybe ^SwapStep) = SwapStepParams;
+              swap_params#_ deadline:Timestamp recipient_addr:MsgAddressInt referral_addr:MsgAddress
+                    fulfill_payload:(Maybe ^Cell) reject_payload:(Maybe ^Cell) = SwapParams;
+
+```
+
 
 ```typescript
 // FIXME: we bring some tutorials from the cookbook here .
