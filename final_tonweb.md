@@ -23,7 +23,6 @@ So :
 ```typescript
 const TonWeb = require("tonweb");
 
-import { Factory, MAINNET_FACTORY_ADDR } from "@dedust/sdk";
 
 
 /* By default, mainnet toncenter.com API is used. Please note that without the API key there will be a request rate limit.
@@ -42,6 +41,8 @@ const tonweb = new TonWeb(
 After that, we need to use some addresses and our wallet :
 ```typescript
 
+import { Factory, MAINNET_FACTORY_ADDR } from "@dedust/sdk";
+
 //The Factory contract is used to  locate other contracts.
 const factory_address = new TonWeb.Address(Factory.createFromAddress(MAINNET_FACTORY_ADDR));
 // or 
@@ -51,8 +52,8 @@ const factory_address = new TonWeb.Address(Factory.createFromAddress(MAINNET_FAC
 
 Our wallet is needed to send messages to DEX, to use our wallet we need access to its address which can be obtained from our public key, and
 also, we need access to our secret key hence we need to sign our message.
-So we can use mnemonic words if we already have a wallet or create it from scratch and use those.
-We address both scenarios, and suppose in either case we charge our wallet with some coin because without a coin we can not send any message.
+So we can use mnemonic words if we already have a wallet, or create new wallet from scratch and use their mnemonic words .
+We suppose in either case we charge our wallet with some coin because without a coin we can not send any message.
 
 ```typescript
 
