@@ -136,6 +136,67 @@ to prepare payload objects, that have some method to add schema :
 ```
 Now we bring dedust SDK and use some useful objects
 ```typescript
+import { Factory, MAINNET_FACTORY_ADDR } from "@dedust/sdk";
+import { Asset, VaultNative } from "@dedust/sdk";
+
+//Native vault is for TON
+const tonVault = tonClient.open(await factory.getNativeVault());
+// we use factory to find our native coin (Toncoin) Vault.
+
+import { PoolType } from "@dedust/sdk";
+
+const SCALE_ADDRESS = Address.parse(
+  "EQBlqsm144Dq6SjbPI4jjZvA1hqTIP3CvHovbIfW_t-SCALE",
+);
+// master address of SCALE jetton
+const TON = Asset.native();
+const SCALE = Asset.jetton(SCALE_ADDRESS);
+
+const pool = tonClient.open(
+  await factory.getPool(PoolType.VOLATILE, [TON, SCALE]),
+);
+
+import { ReadinessStatus } from "@dedust/sdk";
+
+// Check if pool exists:
+if ((await pool.getReadinessStatus()) !== ReadinessStatus.READY) {
+  throw new Error("Pool (TON, SCALE) does not exist.");
+}
+
+// Check if vault exits:
+if ((await tonVault.getReadinessStatus()) !== ReadinessStatus.READY) {
+  throw new Error("Vault (TON) does not exist.");
+}
+
+
+//find Vault
+const scaleVault = tonClient.open(await factory.getJettonVault(SCALE_ADDRESS));
+
+
+//find jetton address
+import { JettonRoot, JettonWallet } from '@dedust/sdk';
+
+const scaleRoot = tonClient.open(JettonRoot.createFromAddress(SCALE_ADDRESS));
+const scaleWallet = tonClient.open(await scaleRoot.getWallet(sender.address);
+
+// Transfer jettons to the Vault (SCALE) with corresponding payload
+
+const amountIn = toNano('50'); // 50 SCALE
+
+await scaleWallet.sendTransfer(sender, toNano("0.3"), {
+  amount: amountIn,
+  destination: scaleVault.address,
+  responseAddress: sender.address, // return gas to user
+  forwardAmount: toNano("0.25"),
+  forwardPayload: VaultJetton.createSwapPayload({ poolAddress }),
+});
+
+
+
+
+
+
+
 
 const collectionAddress = new TonWeb.Address("put your collection address");
 ```
