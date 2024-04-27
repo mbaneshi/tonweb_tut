@@ -134,6 +134,11 @@ to prepare payload objects, that have some method to add schema :
 ```typescript
 
 ```
+Now we bring dedust SDK and use some useful objects
+```typescript
+
+const collectionAddress = new TonWeb.Address("put your collection address");
+```
 and lastly, 
 ```typescript
  wallet.methods
