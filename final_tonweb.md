@@ -103,6 +103,32 @@ Now that we have access to our key pairs, we can access our wallet by  :
     });
 
 ```
+
+
+Now lets bring neccesary objects from dedust Sdk 
+```ts
+import { Factory, MAINNET_FACTORY_ADDR } from '@dedust/sdk';
+
+const factory = Factory.createFromAddress(MAINNET_FACTORY_ADDR);
+//factory will be used to find other facility
+import { Asset, VaultNative } from '@dedust/sdk';
+const  ton = factory.getNativeVault();
+```
+Now that we find ton vault address by means of factory, we need to send our swap message from our wallet :
+
+```ts
+  await wallet.methods.transfer({
+        secretKey: keyPair.secretKey,
+        toAddress: ton,
+        amount: tonweb.utils.toNano('0.05'),
+        seqno: await wallet.methods.seqno().call(),
+        payload: messageBody,
+        sendMode: 3
+    }).send();
+
+```
+
+
 From here, we can use some method associated with our wallet object like transfer to send a message to corresponding vault.
 to achieve this, we need to prepare our message payload. according to the dedust schema that was brought in the preface of this tutorial section we have two schema,
 one for jetton to jetton and another tonconin to jetton.
