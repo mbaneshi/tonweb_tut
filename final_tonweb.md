@@ -44,10 +44,8 @@ After that, we need to use some addresses and our wallet :
 import { Factory, MAINNET_FACTORY_ADDR } from "@dedust/sdk";
 
 //The Factory contract is used to  locate other contracts.
-const factory_address = new TonWeb.Address(Factory.createFromAddress(MAINNET_FACTORY_ADDR));
-// or 
- const factory_address = new TonWeb.utils.Address(Factory.createFromAddress(MAINNET_FACTORY_ADDR));
-// both are correct.
+const factory_address = Factory.createFromAddress(MAINNET_FACTORY_ADDR);
+
 ```
 
 Our wallet is needed to send messages to DEX, to use our wallet we need access to its address which can be obtained from our public key, and
