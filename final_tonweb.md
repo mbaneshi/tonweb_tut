@@ -122,10 +122,27 @@ Now that we find ton vault address by means of factory, we need to send our swap
         toAddress: ton,
         amount: tonweb.utils.toNano('0.05'),
         seqno: await wallet.methods.seqno().call(),
-        payload: messageBody,
-        sendMode: 3
+    
     }).send();
 
+```
+and for swapping jetton we have :
+
+```ts
+import { JettonRoot, JettonWallet } from '@dedust/sdk';
+const scaleRoot = JettonRoot.createFromAddress(SCALE_ADDRESS);
+
+const scaleWallet = scaleRoot.getWallet(sender.address);
+
+const amountIn = toNano('50'); // 50 SCALE
+
+await scaleWallet.sendTransfer(sender, toNano("0.3"), {
+  amount: amountIn,
+  destination: scaleVault.address,
+  responseAddress: sender.address, // return gas to user
+  forwardAmount: toNano("0.25"),
+  forwardPayload: VaultJetton.createSwapPayload({ poolAddress }),
+});
 ```
 
 
